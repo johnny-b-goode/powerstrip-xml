@@ -1,26 +1,26 @@
 package net.scientifichooliganism.xmlplugin.bindings;
 
+import net.scientifichooliganism.javaplug.interfaces.Action;
+import net.scientifichooliganism.javaplug.vo.BaseAction;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import net.scientifichooliganism.javaplug.vo.Action;
-
 @XmlRootElement(name="action")
-public class XMLAction extends Action {
+public class XMLAction extends XMLValueObject implements Action {
+	protected Action delegate;
 
-	public XMLAction () {
-		super();
+	public XMLAction() {
+		this(new BaseAction());
 	}
-
-	@Override
-	@XmlElement(name="id")
-	public void setID(int in) {
-		super.setID(in);
+	public XMLAction (Action action) {
+		super(action);
+		delegate = super.getDelegate();
 	}
 
 	@Override
 	@XmlElement(name="class")
 	public void setKlass (String in) throws IllegalArgumentException {
-		super.setKlass(in);
+		delegate.setKlass(in);
 	}
 }

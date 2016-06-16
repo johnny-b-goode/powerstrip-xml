@@ -1,19 +1,20 @@
 package net.scientifichooliganism.xmlplugin.bindings;
 
-import javax.xml.bind.annotation.XmlElement;
+import net.scientifichooliganism.javaplug.interfaces.Configuration;
+import net.scientifichooliganism.javaplug.vo.BaseConfiguration;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
-import net.scientifichooliganism.javaplug.vo.Configuration;
-
 @XmlRootElement(name="config")
-public class XMLConfig extends Configuration {
-	public XMLConfig () {
-		super();
+public class XMLConfig extends XMLValueObject implements Configuration {
+	Configuration delegate;
+
+	public XMLConfig(){
+		this(new BaseConfiguration());
 	}
 
-	@Override
-	@XmlElement(name="id")
-	public void setID(int in) {
-		super.setID(in);
+	public XMLConfig (Configuration configuration) {
+		super(configuration);
+		delegate = super.getDelegate();
 	}
 }
