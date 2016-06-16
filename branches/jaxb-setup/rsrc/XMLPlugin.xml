@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+	<name>XMLDataStorePlugin</name>
+	<class>net.scientifichooliganism.xmlplugin.XMLDataStorePlugin</class>
+	<config>
+		<id>0</id>
+		<module>XMLDataStorePlugin</module>
+		<sequence>0</sequence>
+		<key>active</key>
+		<value>true</value>
+	</config>
+	<config>
+		<id>1</id>
+		<module>XMLDataStorePlugin</module>
+		<sequence>1</sequence>
+		<key>storage</key>
+		<value>true</value>
+	</config>
+	<action>
+		<id>0</id>
+		<name>addResource</name>
+		<description>add a resource to the collection of resources used by this plugin</description>
+		<module>XMLDataStorePlugin</module>
+		<class>net.scientifichooliganism.xmlplugin.XMLDataStorePlugin</class>
+		<!--url></url-->
+		<method>addResource</method>
+	</action>
+	<action>
+		<id>1</id>
+		<name>query</name>
+		<description>query data from an XML backed data store</description>
+		<module>XMLDataStorePlugin</module>
+		<class>net.scientifichooliganism.xmlplugin.XMLDataStorePlugin</class>
+		<!--url></url-->
+		<method>query</method>
+	</action>
+</plugin>
