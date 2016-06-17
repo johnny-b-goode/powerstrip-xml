@@ -1,12 +1,13 @@
 package net.scientifichooliganism.xmlplugin.bindings;
 
+import net.scientifichooliganism.javaplug.interfaces.Action;
+import net.scientifichooliganism.javaplug.vo.BaseAction;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import net.scientifichooliganism.javaplug.vo.Action;
-
 @XmlRootElement(name="action")
-public class XMLAction extends Action {
+public class XMLAction extends BaseAction implements Action {
 
 	public XMLAction () {
 		super();
