@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="application")
 public class XMLApplication extends XMLValueObject implements Application {
-    Application delegate;
+    protected Application delegate;
 
     public XMLApplication(){
         this(new BaseApplication());

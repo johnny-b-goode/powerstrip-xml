@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="event")
 public class XMLEvent extends XMLValueObject implements Event {
-    Event delegate;
+    protected Event delegate;
 
     public XMLEvent (Event event) {
         super(event);
