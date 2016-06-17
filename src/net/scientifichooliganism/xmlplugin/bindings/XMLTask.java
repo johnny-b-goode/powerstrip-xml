@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="task")
 public class XMLTask extends XMLValueObject implements Task {
-    Task delegate;
+    protected Task delegate;
 
     public XMLTask(){
         this(new BaseTask());

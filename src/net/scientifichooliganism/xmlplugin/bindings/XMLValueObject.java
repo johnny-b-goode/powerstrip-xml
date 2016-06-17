@@ -8,7 +8,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @XmlTransient
 public class XMLValueObject implements ValueObject {
-
     protected ValueObject delegate;
 
     public XMLValueObject(){

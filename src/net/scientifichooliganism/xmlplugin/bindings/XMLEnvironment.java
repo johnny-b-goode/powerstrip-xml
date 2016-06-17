@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="environment")
 public class XMLEnvironment extends XMLValueObject implements Environment{
-    Environment delegate;
+    protected Environment delegate;
 
     public XMLEnvironment(){
         this(new BaseEnvironment());

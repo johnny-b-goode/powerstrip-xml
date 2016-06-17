@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="transaction")
 public class XMLTransaction extends XMLValueObject implements Transaction {
-    Transaction delegate;
+    protected Transaction delegate;
 
     public XMLTransaction(){
         this(new BaseTransaction());

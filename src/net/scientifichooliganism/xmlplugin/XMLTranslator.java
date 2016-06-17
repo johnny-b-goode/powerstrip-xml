@@ -85,14 +85,14 @@ public class XMLTranslator {
 
 		try {
 			Class klass = Class.forName("net.scientifichooliganism.xmlplugin.bindings.XML" + type);
-			System.out.println("Klass: " + klass.getName());
+//			System.out.println("Klass: " + klass.getName());
 			for(Annotation annotation : klass.getAnnotations()){
-				System.out.println("    annotation: " + annotation.toString());
+//				System.out.println("    annotation: " + annotation.toString());
 			}
 			for(Method m : klass.getMethods()){
-				System.out.println("    Method: " + m.getName());
+//				System.out.println("    Method: " + m.getName());
 				for(Annotation a : m.getAnnotations()){
-					System.out.println("        annotation: " + a);
+//					System.out.println("        annotation: " + a);
 				}
 			}
 			JAXBContext context = JAXBContext.newInstance(klass);

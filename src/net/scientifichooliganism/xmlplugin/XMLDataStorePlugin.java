@@ -147,24 +147,24 @@ public class XMLDataStorePlugin implements Plugin, Store {
 	plugin to be completely re-written at some point so, I guess I'll just
 	finish it as it is.*/
 	private Collection query (String resource, String strQuery) {
-//		System.out.println("XMLDataStorePlugin.query(String, String)");
-		//System.out.println("	resource: " + resource);
+		System.out.println("XMLDataStorePlugin.query(String, String)");
+		System.out.println("	resource: " + resource);
 		Vector results = new Vector();
 		File resourceFile = new File(resource);
 
 		try {
 			if (resourceFile.isFile()) {
-				//System.out.println("		resource is a file...");
+				System.out.println("		resource is a file...");
 				String resourceExtension = resourceFile.getCanonicalPath();
 
 				if (resourceExtension.contains(".")) {
 					resourceExtension = resourceExtension.substring(resourceExtension.lastIndexOf(".") + 1).trim().toLowerCase();
 				}
 
-				//System.out.println("		resourceExtension: " + resourceExtension);
+				System.out.println("		resourceExtension: " + resourceExtension);
 
 				if (resourceExtension.equals("xml")) {
-//					System.out.println("		resource is an xml file..." + resource);
+					System.out.println("		resource is an xml file..." + resource);
 					//DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 					DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 					Document doc = builder.parse(resourceFile);
@@ -177,6 +177,7 @@ public class XMLDataStorePlugin implements Plugin, Store {
 						NodeList nl = (NodeList)expression.evaluate(doc, XPathConstants.NODESET);
 
 						for (int i = 0; i < nl.getLength(); i++) {
+							System.out.println("NODE ITEM:::::::::::: " + nl.item(i));
 							Node n = nl.item(i);
 							results.add(XMLTranslator.objectFromNode(n));
 						}

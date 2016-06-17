@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="config")
 public class XMLConfig extends XMLValueObject implements Configuration {
-	Configuration delegate;
+	protected Configuration delegate;
 
 	public XMLConfig(){
 		this(new BaseConfiguration());
