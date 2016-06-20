@@ -8,7 +8,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="action")
 public class XMLAction extends BaseAction implements Action {
-
 	public XMLAction () {
 		super();
 	}
