@@ -1,5 +1,6 @@
 package net.scientifichooliganism.xmlplugin;
 
+import net.scientifichooliganism.javaplug.interfaces.Plugin;
 import net.scientifichooliganism.javaplug.interfaces.ValueObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -11,10 +12,8 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.dom.DOMResult;
 import java.io.StringReader;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 
-public class XMLTranslator {
+public class XMLPlugin implements Plugin {
 
     public static <T extends ValueObject> Node nodeFromObject(T object) {
 		DOMResult result = new DOMResult();
@@ -85,16 +84,6 @@ public class XMLTranslator {
 
 		try {
 			Class klass = Class.forName("net.scientifichooliganism.xmlplugin.bindings.XML" + type);
-//			System.out.println("Klass: " + klass.getName());
-			for(Annotation annotation : klass.getAnnotations()){
-//				System.out.println("    annotation: " + annotation.toString());
-			}
-			for(Method m : klass.getMethods()){
-//				System.out.println("    Method: " + m.getName());
-				for(Annotation a : m.getAnnotations()){
-//					System.out.println("        annotation: " + a);
-				}
-			}
 			JAXBContext context = JAXBContext.newInstance(klass);
 			Unmarshaller outlaw = context.createUnmarshaller();
 			T obj = (T)(klass.cast(outlaw.unmarshal(n)));
@@ -124,5 +113,10 @@ public class XMLTranslator {
 		}
 
 		return ret;
+	}
+
+	@Override
+	public String[][] getActions() {
+		return new String[0][];
 	}
 }

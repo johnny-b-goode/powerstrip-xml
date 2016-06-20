@@ -4,34 +4,53 @@
 	<class>net.scientifichooliganism.xmlplugin.XMLDataStorePlugin</class>
 	<config>
 		<id>0</id>
-		<module>XMLDataStorePlugin</module>
+		<module>XMLPlugin</module>
 		<sequence>0</sequence>
 		<key>active</key>
 		<value>true</value>
 	</config>
 	<config>
 		<id>1</id>
-		<module>XMLDataStorePlugin</module>
+		<module>XMLPlugin</module>
 		<sequence>1</sequence>
 		<key>storage</key>
-		<value>true</value>
+		<value>false</value>
 	</config>
 	<action>
 		<id>0</id>
-		<name>addResource</name>
-		<description>add a resource to the collection of resources used by this plugin</description>
-		<module>XMLDataStorePlugin</module>
-		<class>net.scientifichooliganism.xmlplugin.XMLDataStorePlugin</class>
+		<name>nodeFromObject</name>
+		<description>Create an XMLNode from an Object</description>
+		<module>XMLPlugin</module>
+		<class>net.scientifichooliganism.xmlplugin.XMLPlugin</class>
 		<!--url></url-->
-		<method>addResource</method>
+		<method>nodeFromObject</method>
 	</action>
 	<action>
 		<id>1</id>
-		<name>query</name>
-		<description>query data from an XML backed data store</description>
-		<module>XMLDataStorePlugin</module>
-		<class>net.scientifichooliganism.xmlplugin.XMLDataStorePlugin</class>
+		<name>objectFromNode</name>
+		<description>Create an object from an XMLNode</description>
+		<module>XMLPlugin</module>
+		<class>net.scientifichooliganism.xmlplugin.XMLPlugin</class>
 		<!--url></url-->
-		<method>query</method>
+		<method>objectFromNode</method>
 	</action>
+	<action>
+		<id>2</id>
+		<name>objectFromString</name>
+		<description>Create an object from an XML String</description>
+		<module>XMLPlugin</module>
+		<class>net.scientifichooliganism.xmlplugin.XMLPlugin</class>
+		<!--url></url-->
+		<method>objectFromString</method>
+	</action>
+	<action>
+		<id>3</id>
+		<name>stringFromObject</name>
+		<description>Create a XML string from an object</description>
+		<module>XMLPlugin</module>
+		<class>net.scientifichooliganism.xmlplugin.XMLPlugin</class>
+		<!--url></url-->
+		<method>stringFromObject</method>
+	</action>
+
 </plugin>
