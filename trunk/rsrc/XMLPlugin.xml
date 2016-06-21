@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
-	<name>XMLDataStorePlugin</name>
-	<class>net.scientifichooliganism.xmlplugin.XMLDataStorePlugin</class>
+	<name>XMLPlugin</name>
+	<class>net.scientifichooliganism.xmlplugin.XMLPlugin</class>
 	<config>
 		<id>0</id>
 		<module>XMLPlugin</module>
@@ -52,5 +52,4 @@
 		<!--url></url-->
 		<method>stringFromObject</method>
 	</action>
-
 </plugin>

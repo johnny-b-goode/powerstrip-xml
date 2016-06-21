@@ -14,8 +14,20 @@ import javax.xml.transform.dom.DOMResult;
 import java.io.StringReader;
 
 public class XMLPlugin implements Plugin {
+	private static XMLPlugin instance;
 
-    public static <T extends ValueObject> Node nodeFromObject(T object) {
+	private XMLPlugin(){
+
+	}
+
+	public static XMLPlugin getInstance(){
+		if(instance == null){
+			instance = new XMLPlugin();
+		}
+		return instance;
+	}
+
+    public Node nodeFromObject(Object object) {
 		DOMResult result = new DOMResult();
 
 		try {
@@ -31,13 +43,13 @@ public class XMLPlugin implements Plugin {
 		return result.getNode();
 	}
 
-	public static <T extends ValueObject> String stringFromObject(T object){
+	public String stringFromObject(Object object){
 		return nodeFromObject(object).toString();
 	}
 
-	public static <T extends ValueObject> T objectFromString(String string){
+	public Object objectFromString(String string){
 		Document result;
-		T ret = null;
+		Object ret = null;
 		try {
 			result = DocumentBuilderFactory.newInstance()
 					.newDocumentBuilder().parse(new InputSource(new StringReader(string)));
@@ -52,11 +64,17 @@ public class XMLPlugin implements Plugin {
 			exc.printStackTrace();
 		}
 
-		return (T)ret;
+		return ret;
+	}
+
+	public Object objectFromNode(Object object){
+		return objectFromNode((Node)object);
 	}
 
     /*Turn a NodeList into an object*/
-	public static <T extends ValueObject> T objectFromNode (Node n) {
+	public Object objectFromNode (Node n) {
+		System.out.println("In objectFromNode");
+		System.out.println("Node: " + n);
 		if (n == null) {
 			throw new RuntimeException ("objectFromNodeList(NodeList) NodeList is null");
 		}
@@ -65,7 +83,7 @@ public class XMLPlugin implements Plugin {
 			throw new RuntimeException ("objectFromNodeList(NodeList) NodeList is empty");
 		}
 
-		T ret = null;
+		Object ret = null;
 		String type = n.getNodeName().trim();
 		type = type.substring(0,1).toUpperCase() + type.substring(1);
 
@@ -86,7 +104,7 @@ public class XMLPlugin implements Plugin {
 			Class klass = Class.forName("net.scientifichooliganism.xmlplugin.bindings.XML" + type);
 			JAXBContext context = JAXBContext.newInstance(klass);
 			Unmarshaller outlaw = context.createUnmarshaller();
-			T obj = (T)(klass.cast(outlaw.unmarshal(n)));
+			ValueObject obj = (ValueObject) (klass.cast(outlaw.unmarshal(n)));
 			//set the label on the object.
 			String label = n.getBaseURI();
 

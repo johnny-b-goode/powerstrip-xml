@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="XMLDataStorePlugin" default="build" basedir="..">
+<project name="XMLPlugin" default="build" basedir="..">
 	<!--The tstamp tag allows us to use the DSTAMP, TSTAMP, and TODAY properties
 	later. These are the date stamp, time stamp, and the date in the format of
 	four letter month, two digit day, and four digit year.-->
@@ -179,16 +179,16 @@
 	</target>
 
 	<target name="javadoc" depends="clean_doc" description="">
-		<javadoc destdir="${doc}" author="true" version="true" use="true" windowtitle="XML Data Store Plugin Documentation">
+		<javadoc destdir="${doc}" author="true" version="true" use="true" windowtitle="XML Plugin Documentation">
 			<fileset dir="${src}" />
-			<doctitle><![CDATA[<h1>XML Data Store Plugin Javadoc</h1>]]></doctitle>
+			<doctitle><![CDATA[<h1>XML Plugin Javadoc</h1>]]></doctitle>
 			<bottom><![CDATA[<i>Copyright &#169; 2016 John Tatum. All Rights Reserved.</i>]]></bottom>
 			<link offline="true" href="https://docs.oracle.com/javase/8/docs/api/" packagelistLoc="C:\tmp"/>
 		</javadoc>
 	</target>
 
 	<target name="zip" depends="clean_zip" description="">
-		<zip destfile="${zip}/XMLDataStorePlugin.zip" basedir="${bin}" whenempty="fail">
+		<zip destfile="${zip}/XMLPlugin.zip" basedir="${bin}" whenempty="fail">
 			<zipfileset dir="${bin}" />
 			<zipfileset dir="${rsrc}" includes="XMLPlugin.xml" />
 		</zip>
