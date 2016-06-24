@@ -73,8 +73,8 @@ public class XMLPlugin implements Plugin {
 
     /*Turn a NodeList into an object*/
 	public Object objectFromNode (Node n) {
-		System.out.println("In objectFromNode");
-		System.out.println("Node: " + n);
+//		System.out.println("In objectFromNode");
+//		System.out.println("Node: " + n);
 		if (n == null) {
 			throw new RuntimeException ("objectFromNodeList(NodeList) NodeList is null");
 		}
