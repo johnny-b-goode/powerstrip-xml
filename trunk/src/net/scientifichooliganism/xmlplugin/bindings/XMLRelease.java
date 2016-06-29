@@ -17,4 +17,9 @@ public class XMLRelease extends BaseRelease implements Release {
     public void setID(int in){
         super.setID(in);
     }
+
+    @Override
+    public int getID(){
+        return super.getID();
+    }
 }

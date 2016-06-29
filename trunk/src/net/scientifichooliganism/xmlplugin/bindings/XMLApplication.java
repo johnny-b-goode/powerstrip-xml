@@ -17,4 +17,9 @@ public class XMLApplication extends BaseApplication implements Application {
     public void setID(int in){
         super.setID(in);
     }
+
+    @Override
+    public int getID(){
+        return super.getID();
+    }
 }

@@ -15,4 +15,9 @@ public class XMLTransaction extends BaseTransaction implements Transaction {
     public void setID(int in){
         super.setID(in);
     }
+
+    @Override
+    public int getID(){
+        return super.getID();
+    }
 }

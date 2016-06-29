@@ -17,4 +17,9 @@ public class XMLBlock extends BaseBlock implements Block {
     public void setID(int in){
         super.setID(in);
     }
+
+    @Override
+    public int getID(){
+        return super.getID();
+    }
 }
