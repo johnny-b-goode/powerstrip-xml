@@ -7,30 +7,76 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="action")
-public class XMLAction extends BaseAction implements Action {
+public class XMLAction extends XMLValueObject implements Action {
+	Action delegate;
+
 	public XMLAction () {
-		super();
+		this(new BaseAction());
+	}
+
+	public XMLAction(Action delegate){
+		super(delegate);
+		this.delegate = delegate;
 	}
 
 	@Override
-	@XmlElement(name="id")
-	public void setID(int in) {
-		super.setID(in);
+	public String getName() {
+		return delegate.getName();
 	}
 
 	@Override
-	public int getID(){
-		return super.getID();
+	public void setName(String in) {
+		delegate.setName(in);
+	}
+
+	@Override
+	public String getDescription() {
+		return delegate.getDescription();
+	}
+
+	@Override
+	public void setDescription(String in) {
+		delegate.setDescription(in);
+	}
+
+	@Override
+	public String getModule() {
+		return delegate.getModule();
+	}
+
+	@Override
+	public void setModule(String in) {
+		delegate.setModule(in);
+	}
+
+	@Override
+	public String getKlass() {
+		return delegate.getKlass();
 	}
 
 	@Override
 	@XmlElement(name="class")
-	public void setKlass (String in) throws IllegalArgumentException {
-		super.setKlass(in);
+	public void setKlass(String in) {
+		delegate.setKlass(in);
 	}
 
 	@Override
-	public String getKlass(){
-		return super.getKlass();
+	public String getURL() {
+		return delegate.getURL();
+	}
+
+	@Override
+	public void setURL(String in) {
+		delegate.setURL(in);
+	}
+
+	@Override
+	public String getMethod() {
+		return delegate.getMethod();
+	}
+
+	@Override
+	public void setMethod(String in) {
+		delegate.setMethod(in);
 	}
 }

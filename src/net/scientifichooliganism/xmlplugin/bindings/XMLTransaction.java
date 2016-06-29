@@ -7,17 +7,16 @@ import net.scientifichooliganism.javaplug.vo.BaseTransaction;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="transaction")
-public class XMLTransaction extends BaseTransaction implements Transaction {
-    public XMLTransaction(){
-        super();
+public class XMLTransaction extends XMLValueObject implements Transaction {
+    Transaction delegate;
+
+    public XMLTransaction() {
+        this(new BaseTransaction());
     }
 
-    public void setID(int in){
-        super.setID(in);
+    public XMLTransaction(Transaction delegate){
+        super(delegate);
+        this.delegate = delegate;
     }
 
-    @Override
-    public int getID(){
-        return super.getID();
-    }
 }
