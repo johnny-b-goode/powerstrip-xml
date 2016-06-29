@@ -4,23 +4,18 @@ package net.scientifichooliganism.xmlplugin.bindings;
 import net.scientifichooliganism.javaplug.interfaces.TaskCategory;
 import net.scientifichooliganism.javaplug.vo.BaseTaskCategory;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="task_category")
-public class XMLTaskCategory extends BaseTaskCategory implements TaskCategory {
-    public XMLTaskCategory(){
-        super();
+public class XMLTaskCategory extends XMLValueObject implements TaskCategory {
+    TaskCategory delegate;
+
+    public XMLTaskCategory() {
+        this(new BaseTaskCategory());
     }
 
-    @Override
-    @XmlElement(name="id")
-    public void setID(int in){
-        super.setID(in);
-    }
-
-    @Override
-    public int getID(){
-        return super.getID();
+    public XMLTaskCategory(TaskCategory delegate){
+        super(delegate);
+        this.delegate = delegate;
     }
 }

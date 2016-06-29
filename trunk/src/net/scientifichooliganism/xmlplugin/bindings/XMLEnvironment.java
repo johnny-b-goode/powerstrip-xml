@@ -3,23 +3,18 @@ package net.scientifichooliganism.xmlplugin.bindings;
 import net.scientifichooliganism.javaplug.interfaces.Environment;
 import net.scientifichooliganism.javaplug.vo.BaseEnvironment;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="environment")
-public class XMLEnvironment extends BaseEnvironment implements Environment {
-    public XMLEnvironment(){
-        super();
+public class XMLEnvironment extends XMLValueObject implements Environment{
+    Environment delegate;
+
+    public XMLEnvironment() {
+        this(new BaseEnvironment());
     }
 
-    @Override
-    @XmlElement(name="id")
-    public void setID(int in){
-        super.setID(in);
-    }
-
-    @Override
-    public int getID(){
-        return super.getID();
+    public XMLEnvironment(Environment delegate){
+        super(delegate);
+        this.delegate = delegate;
     }
 }

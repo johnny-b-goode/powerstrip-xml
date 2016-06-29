@@ -3,23 +3,18 @@ package net.scientifichooliganism.xmlplugin.bindings;
 import net.scientifichooliganism.javaplug.interfaces.Release;
 import net.scientifichooliganism.javaplug.vo.BaseRelease;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="release")
-public class XMLRelease extends BaseRelease implements Release {
+public class XMLRelease extends XMLValueObject implements Release {
+    Release delegate;
+
     public XMLRelease(){
-        super();
+        this(new BaseRelease());
     }
 
-    @Override
-    @XmlElement(name="id")
-    public void setID(int in){
-        super.setID(in);
-    }
-
-    @Override
-    public int getID(){
-        return super.getID();
+    public XMLRelease(Release delegate){
+        super(delegate);
+        this.delegate = delegate;
     }
 }

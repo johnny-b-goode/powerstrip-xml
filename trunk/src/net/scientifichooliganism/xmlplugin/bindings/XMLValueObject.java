@@ -7,19 +7,37 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="value_object")
-public class XMLValueObject extends BaseValueObject implements ValueObject {
+public class XMLValueObject implements ValueObject {
+    ValueObject delegate;
+
     public XMLValueObject(){
-        super();
+        this(new BaseValueObject());
+    }
+
+    public XMLValueObject(ValueObject delegate){
+        this.delegate = delegate;
+    }
+
+    @Override
+    public int getID(){
+        return delegate.getID();
     }
 
     @Override
     @XmlElement(name="id")
     public void setID(int in){
-        super.setID(in);
+        delegate.setID(in);
     }
 
     @Override
-    public int getID(){
-        return super.getID();
+    public String getLabel() {
+        return delegate.getLabel();
     }
+
+    @Override
+    public void setLabel(String in) {
+        delegate.setLabel(in);
+    }
+
+
 }
