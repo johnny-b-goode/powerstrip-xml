@@ -18,4 +18,9 @@ public class XMLTaskCategory extends BaseTaskCategory implements TaskCategory {
     public void setID(int in){
         super.setID(in);
     }
+
+    @Override
+    public int getID(){
+        return super.getID();
+    }
 }

@@ -19,8 +19,18 @@ public class XMLAction extends BaseAction implements Action {
 	}
 
 	@Override
+	public int getID(){
+		return super.getID();
+	}
+
+	@Override
 	@XmlElement(name="class")
 	public void setKlass (String in) throws IllegalArgumentException {
 		super.setKlass(in);
+	}
+
+	@Override
+	public String getKlass(){
+		return super.getKlass();
 	}
 }

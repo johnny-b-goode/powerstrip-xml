@@ -16,4 +16,9 @@ public class XMLTask extends XMLValueObject implements Task {
     public void setID(int in){
         super.setID(in);
     }
+
+    @Override
+    public int getID(){
+        return super.getID();
+    }
 }

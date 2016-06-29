@@ -17,4 +17,9 @@ public class XMLEnvironment extends BaseEnvironment implements Environment {
     public void setID(int in){
         super.setID(in);
     }
+
+    @Override
+    public int getID(){
+        return super.getID();
+    }
 }

@@ -1,7 +1,7 @@
 package net.scientifichooliganism.xmlplugin;
 
-import net.scientifichooliganism.javaplug.interfaces.Plugin;
-import net.scientifichooliganism.javaplug.interfaces.ValueObject;
+import net.scientifichooliganism.javaplug.interfaces.*;
+import net.scientifichooliganism.xmlplugin.bindings.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -12,6 +12,8 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.dom.DOMResult;
 import java.io.StringReader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class XMLPlugin implements Plugin {
 	private static XMLPlugin instance;
@@ -27,14 +29,16 @@ public class XMLPlugin implements Plugin {
 		return instance;
 	}
 
-    public Node nodeFromObject(Object object) {
+    public <T extends ValueObject> Node nodeFromObject(T object) {
+		ValueObject vo = validateObject(object);
+
 		DOMResult result = new DOMResult();
 
 		try {
-			JAXBContext jc = JAXBContext.newInstance(object.getClass());
+			JAXBContext jc = JAXBContext.newInstance(vo.getClass());
 			Marshaller marshaller = jc.createMarshaller();
 
-			marshaller.marshal(object, result);
+			marshaller.marshal(vo, result);
 		}
 		catch (Exception exc){
 			exc.printStackTrace();
@@ -43,7 +47,7 @@ public class XMLPlugin implements Plugin {
 		return result.getNode();
 	}
 
-	public String stringFromObject(Object object){
+	public <T extends ValueObject> String stringFromObject(T object){
 		return nodeFromObject(object).toString();
 	}
 
@@ -136,5 +140,65 @@ public class XMLPlugin implements Plugin {
 	@Override
 	public String[][] getActions() {
 		return new String[0][];
+	}
+
+	private <T extends ValueObject> T validateObject(T object){
+		Class annotationClass = javax.xml.bind.annotation.XmlRootElement.class;
+		T ret = null;
+		if(object.getClass().getAnnotation(annotationClass) != null){
+			return object;
+		} else {
+			Class retClass = null;
+			if(object instanceof Action){
+				retClass = XMLAction.class;
+			} else if(object instanceof Application){
+				retClass = XMLApplication.class;
+			} else if(object instanceof Block) {
+				retClass = XMLBlock.class;
+			} else if(object instanceof Configuration) {
+				retClass = XMLConfig.class;
+			} else if(object instanceof Environment) {
+				retClass = XMLEnvironment.class;
+			} else if(object instanceof Event) {
+				retClass = XMLEvent.class;
+			} else if(object instanceof Release) {
+				retClass = XMLRelease.class;
+			} else if(object instanceof Task) {
+				retClass = XMLTask.class;
+			} else if(object instanceof TaskCategory) {
+				retClass = XMLTaskCategory.class;
+			} else if(object instanceof Transaction) {
+				retClass = XMLTransaction.class;
+			} else if(object instanceof ValueObject) {
+				retClass = XMLValueObject.class;
+			}
+			try {
+				ret = (T)(retClass.getConstructor().newInstance());
+				copyProperties(ret, object);
+			} catch (Exception exc){
+				exc.printStackTrace();
+			}
+		}
+		return ret;
+	}
+
+	private <T extends ValueObject> void copyProperties(T target, T base){
+		Method targetMethods[] = target.getClass().getMethods();
+		for(Method m : targetMethods){
+			if(m.getName().startsWith("set")){
+				String getterString = m.getName().replace("set", "get");
+				// Getter should have no parameters
+				try {
+					Method getter = base.getClass().getMethod(getterString);
+					m.invoke(target, getter.invoke(base));
+				} catch(InvocationTargetException exc) {
+					// Many of these are generated however,
+					// it does not affect us if these methods do not work.
+					// The method not working in this case is what we want
+				} catch (Exception exc){
+					exc.printStackTrace();
+				}
+			}
+		}
 	}
 }
