@@ -19,13 +19,13 @@ public class XMLValueObject implements ValueObject {
     }
 
     @Override
-    public int getID(){
+    public String getID(){
         return delegate.getID();
     }
 
     @Override
     @XmlElement(name="id")
-    public void setID(int in){
+    public void setID(String in){
         delegate.setID(in);
     }
 

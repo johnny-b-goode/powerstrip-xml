@@ -34,7 +34,6 @@ public class XMLPlugin implements Plugin {
 		action.setKlass("test class");
 		action.setDescription("test description");
 		action.setModule("Some module");
-		action.setID(42);
 
 		XMLPlugin plugin = new XMLPlugin();
 		plugin.nodeFromObject(action);
@@ -171,6 +170,7 @@ public class XMLPlugin implements Plugin {
 		if(object.getClass().getAnnotation(annotationClass) != null){
 			return object;
 		} else {
+			// TODO: reconsider if this can be a switch
 			if(object instanceof Action){
 				ret = (T)(new XMLAction((Action)object));
 			} else if(object instanceof Application){
