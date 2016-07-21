@@ -40,4 +40,8 @@ public class XMLValueObject implements ValueObject {
     }
 
 
+    @Override
+    public int compareTo(Object o) {
+        return delegate.compareTo(o);
+    }
 }

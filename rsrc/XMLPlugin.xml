@@ -3,21 +3,18 @@
 	<name>XMLPlugin</name>
 	<class>net.scientifichooliganism.xmlplugin.XMLPlugin</class>
 	<config>
-		<id>0</id>
 		<module>XMLPlugin</module>
 		<sequence>0</sequence>
 		<key>active</key>
 		<value>true</value>
 	</config>
 	<config>
-		<id>1</id>
 		<module>XMLPlugin</module>
 		<sequence>1</sequence>
 		<key>storage</key>
 		<value>false</value>
 	</config>
 	<action>
-		<id>0</id>
 		<name>nodeFromObject</name>
 		<description>Create an XMLNode from an Object</description>
 		<module>XMLPlugin</module>
@@ -26,7 +23,6 @@
 		<method>nodeFromObject</method>
 	</action>
 	<action>
-		<id>1</id>
 		<name>objectFromNode</name>
 		<description>Create an object from an XMLNode</description>
 		<module>XMLPlugin</module>
@@ -35,7 +31,6 @@
 		<method>objectFromNode</method>
 	</action>
 	<action>
-		<id>2</id>
 		<name>objectFromString</name>
 		<description>Create an object from an XML String</description>
 		<module>XMLPlugin</module>
@@ -44,7 +39,6 @@
 		<method>objectFromString</method>
 	</action>
 	<action>
-		<id>3</id>
 		<name>stringFromObject</name>
 		<description>Create a XML string from an object</description>
 		<module>XMLPlugin</module>

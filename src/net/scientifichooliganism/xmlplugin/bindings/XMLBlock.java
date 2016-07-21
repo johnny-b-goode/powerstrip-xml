@@ -7,14 +7,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="block")
 public class XMLBlock extends XMLValueObject implements Block {
-    Block delegate;
-
     public XMLBlock() {
         this(new BaseBlock());
     }
 
     public XMLBlock(Block delegate){
         super(delegate);
-        this.delegate = delegate;
     }
 }
