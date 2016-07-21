@@ -8,14 +8,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="task_category")
 public class XMLTaskCategory extends XMLValueObject implements TaskCategory {
-    TaskCategory delegate;
-
     public XMLTaskCategory() {
         this(new BaseTaskCategory());
     }
 
     public XMLTaskCategory(TaskCategory delegate){
         super(delegate);
-        this.delegate = delegate;
     }
 }

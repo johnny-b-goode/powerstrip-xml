@@ -7,54 +7,51 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="config")
 public class XMLConfig extends XMLValueObject implements Configuration {
-	Configuration delegate;
-
 	public XMLConfig () {
 		this(new BaseConfiguration());
 	}
 
 	public XMLConfig(Configuration delegate){
 		super(delegate);
-		this.delegate = delegate;
 	}
 
 	@Override
 	public String getModule() {
-		return delegate.getModule();
+		return ((Configuration)delegate).getModule();
 	}
 
 	@Override
 	public void setModule(String in) {
-		delegate.setModule(in);
+		((Configuration)delegate).setModule(in);
 	}
 
 	@Override
 	public int getSequence() {
-		return delegate.getSequence();
+		return ((Configuration)delegate).getSequence();
 	}
 
 	@Override
 	public void setSequence(int in) {
-		delegate.setSequence(in);
+		((Configuration)delegate).setSequence(in);
 	}
 
 	@Override
 	public String getKey() {
-		return delegate.getKey();
+		return ((Configuration)delegate).getKey();
 	}
 
 	@Override
 	public void setKey(String in) {
-		delegate.setKey(in);
+		((Configuration)delegate).setKey(in);
 	}
 
 	@Override
 	public String getValue() {
-		return delegate.getValue();
+		return ((Configuration)delegate).getValue();
 	}
 
 	@Override
 	public void setValue(String in) {
-		delegate.setValue(in);
+		((Configuration)delegate).setValue(in);
 	}
 }

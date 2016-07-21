@@ -7,14 +7,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="release")
 public class XMLRelease extends XMLValueObject implements Release {
-    Release delegate;
-
     public XMLRelease(){
         this(new BaseRelease());
     }
 
     public XMLRelease(Release delegate){
         super(delegate);
-        this.delegate = delegate;
     }
 }
