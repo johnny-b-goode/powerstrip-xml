@@ -129,7 +129,7 @@ public class XMLPlugin implements Plugin {
 			Class klass = Class.forName("net.scientifichooliganism.xmlplugin.bindings.XML" + type);
 			JAXBContext context = JAXBContext.newInstance(klass);
 			Unmarshaller outlaw = context.createUnmarshaller();
-			ValueObject obj = (ValueObject) (klass.cast(outlaw.unmarshal(n)));
+			XMLValueObject obj = (XMLValueObject) (klass.cast(outlaw.unmarshal(n)));
 			//set the label on the object.
 			URL url = URI.create(n.getBaseURI()).toURL();
 			String label = URLDecoder.decode(url.toString(), "UTF-8");
@@ -150,7 +150,7 @@ public class XMLPlugin implements Plugin {
 
 			obj.setLabel(label);
 			//System.out.println(obj);
-			ret = obj;
+			ret = obj.getDelegate();
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
@@ -178,7 +178,7 @@ public class XMLPlugin implements Plugin {
 			} else if(object instanceof Block) {
 				ret = (T)(new XMLBlock((Block)object));
 			} else if(object instanceof Configuration) {
-				ret = (T)(new XMLConfig((Configuration)object));
+				ret = (T)(new XMLConfiguration((Configuration)object));
 			} else if(object instanceof Environment) {
 				ret = (T)(new XMLEnvironment((Environment)object));
 			} else if(object instanceof Event) {

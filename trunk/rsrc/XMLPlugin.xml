@@ -2,18 +2,18 @@
 <plugin>
 	<name>XMLPlugin</name>
 	<class>net.scientifichooliganism.xmlplugin.XMLPlugin</class>
-	<config>
+	<configuration>
 		<module>XMLPlugin</module>
 		<sequence>0</sequence>
 		<key>active</key>
 		<value>true</value>
-	</config>
-	<config>
+	</configuration>
+	<configuration>
 		<module>XMLPlugin</module>
 		<sequence>1</sequence>
 		<key>storage</key>
 		<value>false</value>
-	</config>
+	</configuration>
 	<action>
 		<name>nodeFromObject</name>
 		<description>Create an XMLNode from an Object</description>
