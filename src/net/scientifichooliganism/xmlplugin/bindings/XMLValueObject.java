@@ -18,6 +18,10 @@ public class XMLValueObject implements ValueObject {
         this.delegate = delegate;
     }
 
+    public ValueObject getDelegate(){
+        return delegate;
+    }
+
     @Override
     public String getID(){
         return delegate.getID();

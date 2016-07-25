@@ -5,13 +5,13 @@ import net.scientifichooliganism.javaplug.vo.BaseConfiguration;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="config")
-public class XMLConfig extends XMLValueObject implements Configuration {
-	public XMLConfig () {
+@XmlRootElement(name="configuration")
+public class XMLConfiguration extends XMLValueObject implements Configuration {
+	public XMLConfiguration() {
 		this(new BaseConfiguration());
 	}
 
-	public XMLConfig(Configuration delegate){
+	public XMLConfiguration(Configuration delegate){
 		super(delegate);
 	}
 
