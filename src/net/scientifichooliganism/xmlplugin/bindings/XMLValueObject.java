@@ -42,10 +42,5 @@ public class XMLValueObject implements ValueObject {
     public void setLabel(String in) {
         delegate.setLabel(in);
     }
-
-
-    @Override
-    public int compareTo(Object o) {
-        return delegate.compareTo(o);
-    }
 }
+
