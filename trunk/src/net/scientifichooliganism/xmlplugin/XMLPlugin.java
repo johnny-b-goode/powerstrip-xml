@@ -1,5 +1,6 @@
 package net.scientifichooliganism.xmlplugin;
 
+import net.scientifichooliganism.javaplug.annotations.Param;
 import net.scientifichooliganism.javaplug.interfaces.*;
 import net.scientifichooliganism.javaplug.vo.BaseAction;
 import net.scientifichooliganism.xmlplugin.bindings.*;
@@ -13,7 +14,12 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -46,7 +52,7 @@ public class XMLPlugin implements Plugin {
 		return instance;
 	}
 
-    public <T extends ValueObject> Node nodeFromObject(T object) {
+    public <T extends ValueObject> Node nodeFromObject(@Param(name="object") T object) {
 		ValueObject vo = validateObject(object);
 		Document doc = null;
 
@@ -68,11 +74,22 @@ public class XMLPlugin implements Plugin {
 		return doc.getFirstChild();
 	}
 
-	public <T extends ValueObject> String stringFromObject(T object){
-		return nodeFromObject(object).toString();
+	public <T extends ValueObject> String stringFromObject(@Param(name="object") T object){
+	    String ret = null;
+		Node node = nodeFromObject(object);
+		try {
+			StringWriter writer = new StringWriter();
+			Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(new DOMSource(node), new StreamResult(writer));
+			ret = writer.toString();
+		} catch(Exception exc){
+			exc.printStackTrace();
+		}
+
+		return ret;
 	}
 
-	public Object objectFromString(String string){
+	public Object objectFromString(@Param(name="node") String string){
 		Document result;
 		Object ret = null;
 		try {
@@ -92,12 +109,12 @@ public class XMLPlugin implements Plugin {
 		return ret;
 	}
 
-	public Object objectFromNode(Object object){
-		return objectFromNode((Node)object);
+	public Object objectFromNode(@Param(name="node") Object node){
+		return objectFromNode((Node)node);
 	}
 
     /*Turn a NodeList into an object*/
-	public Object objectFromNode (Node n) {
+	public Object objectFromNode (@Param(name="node") Node n) {
 //		System.out.println("In objectFromNode");
 //		System.out.println("Node: " + n);
 		if (n == null) {
@@ -170,7 +187,6 @@ public class XMLPlugin implements Plugin {
 		if(object.getClass().getAnnotation(annotationClass) != null){
 			return object;
 		} else {
-			// TODO: reconsider if this can be a switch
 			if(object instanceof Action){
 				ret = (T)(new XMLAction((Action)object));
 			} else if(object instanceof Application){
