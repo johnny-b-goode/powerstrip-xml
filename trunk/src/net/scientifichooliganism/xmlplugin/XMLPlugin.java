@@ -23,6 +23,7 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.Collection;
 
 public class XMLPlugin implements Plugin {
 	private static XMLPlugin instance;
@@ -74,16 +75,23 @@ public class XMLPlugin implements Plugin {
 		return doc.getFirstChild();
 	}
 
-	public <T extends ValueObject> String stringFromObject(@Param(name="object") T object){
-	    String ret = null;
-		Node node = nodeFromObject(object);
-		try {
-			StringWriter writer = new StringWriter();
-			Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.transform(new DOMSource(node), new StreamResult(writer));
-			ret = writer.toString();
-		} catch(Exception exc){
-			exc.printStackTrace();
+	public String stringFromObject(@Param(name="object") Object object){
+	    String ret = "";
+
+		if(object instanceof Collection){
+			for(Object o : (Collection)object){
+				ret += stringFromObject(o);
+			}
+        } else {
+			Node node = nodeFromObject((ValueObject)object);
+			try {
+				StringWriter writer = new StringWriter();
+				Transformer transformer = TransformerFactory.newInstance().newTransformer();
+				transformer.transform(new DOMSource(node), new StreamResult(writer));
+				ret = writer.toString();
+			} catch (Exception exc) {
+				exc.printStackTrace();
+			}
 		}
 
 		return ret;
