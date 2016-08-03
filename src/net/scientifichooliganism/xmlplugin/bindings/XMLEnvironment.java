@@ -14,4 +14,24 @@ public class XMLEnvironment extends XMLValueObject implements Environment{
     public XMLEnvironment(Environment delegate){
         super(delegate);
     }
+
+    @Override
+    public String getName() {
+        return ((Environment)delegate).getName();
+    }
+
+    @Override
+    public void setName(String s) {
+        ((Environment)delegate).setName(s);
+    }
+
+    @Override
+    public String getDescription() {
+        return ((Environment)delegate).getDescription();
+    }
+
+    @Override
+    public void setDescription(String s) {
+        ((Environment)delegate).setDescription(s);
+    }
 }

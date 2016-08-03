@@ -14,4 +14,24 @@ public class XMLBlock extends XMLValueObject implements Block {
     public XMLBlock(Block delegate){
         super(delegate);
     }
+
+    @Override
+    public String getObjectBlocked() {
+        return ((Block)delegate).getObjectBlocked();
+    }
+
+    @Override
+    public void setObjectedBlocked(String s) {
+        ((Block)delegate).setObjectedBlocked(s);
+    }
+
+    @Override
+    public String getInstanceBlocked() {
+        return ((Block)delegate).getInstanceBlocked();
+    }
+
+    @Override
+    public void setInstanceBlocked(String s) {
+        ((Block)delegate).setInstanceBlocked(s);
+    }
 }
