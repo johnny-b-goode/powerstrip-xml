@@ -14,4 +14,24 @@ public class XMLApplication extends XMLValueObject implements Application {
     public XMLApplication(Application delegate){
         super(delegate);
     }
+
+    @Override
+    public String getName() {
+        return ((Application)delegate).getName();
+    }
+
+    @Override
+    public void setName(String s) {
+        ((Application)delegate).setName(s);
+    }
+
+    @Override
+    public String getDescription() {
+        return ((Application)delegate).getDescription();
+    }
+
+    @Override
+    public void setDescription(String s) {
+        ((Application)delegate).setDescription(s);
+    }
 }
