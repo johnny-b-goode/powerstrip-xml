@@ -3,6 +3,8 @@ package net.scientifichooliganism.xmlplugin;
 import net.scientifichooliganism.javaplug.annotations.Param;
 import net.scientifichooliganism.javaplug.interfaces.*;
 import net.scientifichooliganism.javaplug.vo.BaseAction;
+import net.scientifichooliganism.javaplug.vo.BaseMetaData;
+import net.scientifichooliganism.javaplug.vo.BaseValueObject;
 import net.scientifichooliganism.xmlplugin.bindings.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -23,7 +25,9 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class XMLPlugin implements Plugin {
 	private static XMLPlugin instance;
@@ -42,8 +46,35 @@ public class XMLPlugin implements Plugin {
 		action.setDescription("test description");
 		action.setModule("Some module");
 
+
+        MetaData data1 = new BaseMetaData();
+        data1.setKey("key1");
+        data1.setValue("value1");
+        data1.setSequence(0);
+		MetaData data2 = new BaseMetaData();
+		data2.setKey("key2");
+		data2.setValue("value2");
+		data2.setSequence(1);
+
+		action.addMetaData(data1);
+		action.addMetaData(data2);
+
+		ValueObject vo = new BaseValueObject();
+        vo.addMetaData(data1);
+		vo.addMetaData(data2);
+
+		List<MetaData> data = new ArrayList<>();
+		data.add(data1);
+		data.add(data2);
+
+
 		XMLPlugin plugin = new XMLPlugin();
-		plugin.nodeFromObject(action);
+		String string = plugin.stringFromObject(action);
+		System.out.println(string);
+
+        Action jsonAction = (Action)plugin.objectFromString(string);
+
+		String dummy = "dummy";
 	}
 
 	public static XMLPlugin getInstance(){
@@ -108,7 +139,7 @@ public class XMLPlugin implements Plugin {
 				throw new RuntimeException("objectFromString(String) String does not contain a child");
 			}
 
-			ret = objectFromNode((Node) result.getChildNodes());
+			ret = objectFromNode((Node) result.getDocumentElement());
 		}
 		catch (Exception exc){
 			exc.printStackTrace();
@@ -135,7 +166,6 @@ public class XMLPlugin implements Plugin {
 
 		Object ret = null;
 		String type = n.getNodeName().trim();
-		type = type.substring(0,1).toUpperCase() + type.substring(1);
 
 		//child.getNodeName() should denote the object, so cast to an object of this type
 		//
@@ -151,29 +181,34 @@ public class XMLPlugin implements Plugin {
 		}
 
 		try {
-			Class klass = Class.forName("net.scientifichooliganism.xmlplugin.bindings.XML" + type);
-			JAXBContext context = JAXBContext.newInstance(klass);
+			Class klass = classFromNodeName(type);
+			if(klass == null){
+				throw new RuntimeException("XMLPlugin.objectFromNode(Node) does not know about class: " + type);
+			}
+			JAXBContext context = JAXBContext.newInstance(klass, XMLMetaData.class);
 			Unmarshaller outlaw = context.createUnmarshaller();
 			XMLValueObject obj = (XMLValueObject) (klass.cast(outlaw.unmarshal(n)));
 			//set the label on the object.
-			URL url = URI.create(n.getBaseURI()).toURL();
-			String label = URLDecoder.decode(url.toString(), "UTF-8");
+			if(n.getBaseURI() != null) {
+				URL url = URI.create(n.getBaseURI()).toURL();
+				String label = URLDecoder.decode(url.toString(), "UTF-8");
 
-			if (label == null) {
-				throw new RuntimeException("objectFromNodeList(NodeList) label is null");
+				if (label == null) {
+					throw new RuntimeException("objectFromNodeList(NodeList) label is null");
+				}
+
+				if (label.length() <= 0) {
+					throw new RuntimeException("objectFromNodeList(NodeList) label is empty");
+				}
+
+				label = label.substring(label.indexOf("/") + 1).trim();
+
+				if (label.length() <= 0) {
+					throw new RuntimeException("objectFromNodeList(NodeList) label is empty after doing things to it");
+				}
+
+				obj.setLabel(label);
 			}
-
-			if (label.length() <= 0) {
-				throw new RuntimeException("objectFromNodeList(NodeList) label is empty");
-			}
-
-			label = label.substring(label.indexOf("/") + 1).trim();
-
-			if (label.length() <= 0) {
-				throw new RuntimeException("objectFromNodeList(NodeList) label is empty after doing things to it");
-			}
-
-			obj.setLabel(label);
 			//System.out.println(obj);
 			ret = obj.getDelegate();
 		}
@@ -182,6 +217,37 @@ public class XMLPlugin implements Plugin {
 		}
 
 		return ret;
+	}
+
+	private Class classFromNodeName(String nodeName){
+		switch(nodeName){
+			case "action":
+			    return XMLAction.class;
+			case "application":
+				return XMLApplication.class;
+			case "block":
+				return XMLBlock.class;
+			case "configuration":
+				return XMLConfiguration.class;
+			case "environment":
+				return XMLEnvironment.class;
+			case "event":
+				return XMLEvent.class;
+			case "meta-data":
+				return XMLMetaData.class;
+			case "release":
+				return XMLRelease.class;
+			case "task":
+				return XMLTask.class;
+			case "task_category":
+				return XMLTaskCategory.class;
+			case "transaction":
+				return XMLTransaction.class;
+			case "value_object":
+				return XMLValueObject.class;
+		}
+
+		return null;
 	}
 
 	@Override
@@ -206,7 +272,9 @@ public class XMLPlugin implements Plugin {
 			} else if(object instanceof Environment) {
 				ret = (T)(new XMLEnvironment((Environment)object));
 			} else if(object instanceof Event) {
-				ret = (T)(new XMLEvent((Event)object));
+				ret = (T) (new XMLEvent((Event) object));
+			} else if(object instanceof MetaData){
+				ret = (T) (new XMLMetaData((MetaData)object));
 			} else if(object instanceof Release) {
 				ret = (T)(new XMLRelease((Release)object));
 			} else if(object instanceof Task) {
