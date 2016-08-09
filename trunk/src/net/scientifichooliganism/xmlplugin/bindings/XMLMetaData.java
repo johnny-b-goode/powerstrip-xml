@@ -42,7 +42,9 @@ public class XMLMetaData extends XMLValueObject implements MetaData {
 
     @Override
     public void setSequence(int i) {
-        ((MetaData)delegate).setSequence(i);
+        if(i != -1) {
+            ((MetaData) delegate).setSequence(i);
+        }
     }
 
     @Override
