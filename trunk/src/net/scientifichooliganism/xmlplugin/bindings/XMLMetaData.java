@@ -5,7 +5,7 @@ import net.scientifichooliganism.javaplug.vo.BaseMetaData;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="meta-data")
+@XmlRootElement(name="metadata")
 public class XMLMetaData extends XMLValueObject implements MetaData {
     public XMLMetaData(){
         this(new BaseMetaData());
