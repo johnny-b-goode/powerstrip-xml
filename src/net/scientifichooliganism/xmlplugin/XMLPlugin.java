@@ -50,11 +50,9 @@ public class XMLPlugin implements Plugin {
         MetaData data1 = new BaseMetaData();
         data1.setKey("key1");
         data1.setValue("value1");
-        data1.setSequence(0);
 		MetaData data2 = new BaseMetaData();
 		data2.setKey("key2");
 		data2.setValue("value2");
-		data2.setSequence(1);
 
 		action.addMetaData(data1);
 		action.addMetaData(data2);

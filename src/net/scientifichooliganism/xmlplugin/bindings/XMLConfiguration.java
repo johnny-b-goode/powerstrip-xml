@@ -32,7 +32,9 @@ public class XMLConfiguration extends XMLValueObject implements Configuration {
 
 	@Override
 	public void setSequence(int in) {
-		((Configuration)delegate).setSequence(in);
+		if(in != -1) {
+			((Configuration) delegate).setSequence(in);
+		}
 	}
 
 	@Override
