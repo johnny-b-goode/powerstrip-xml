@@ -188,8 +188,7 @@
 	</target>
 
 	<target name="zip" depends="clean_zip" description="">
-		<zip destfile="${zip}/XMLPlugin.zip" basedir="${bin}" whenempty="fail">
-			<zipfileset dir="${bin}" />
+		<zip destfile="${zip}/XMLPlugin.zip" basedir="${jar}" whenempty="fail">
 			<zipfileset dir="${rsrc}" includes="XMLPlugin.xml" />
 		</zip>
 	</target>
