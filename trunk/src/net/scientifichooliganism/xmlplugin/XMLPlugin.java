@@ -2,9 +2,6 @@ package net.scientifichooliganism.xmlplugin;
 
 import net.scientifichooliganism.javaplug.annotations.Param;
 import net.scientifichooliganism.javaplug.interfaces.*;
-import net.scientifichooliganism.javaplug.vo.BaseAction;
-import net.scientifichooliganism.javaplug.vo.BaseMetaData;
-import net.scientifichooliganism.javaplug.vo.BaseValueObject;
 import net.scientifichooliganism.xmlplugin.bindings.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -25,54 +22,13 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class XMLPlugin implements Plugin {
 	private static XMLPlugin instance;
 
 	private XMLPlugin(){
 
-	}
-
-	public static void main(String args[]){
-		Action action = new BaseAction();
-		action.setName("My Action Name");
-		action.setMethod("New method");
-		action.setURL("google.com");
-
-		action.setKlass("test class");
-		action.setDescription("test description");
-		action.setModule("Some module");
-
-
-        MetaData data1 = new BaseMetaData();
-        data1.setKey("key1");
-        data1.setValue("value1");
-		MetaData data2 = new BaseMetaData();
-		data2.setKey("key2");
-		data2.setValue("value2");
-
-		action.addMetaData(data1);
-		action.addMetaData(data2);
-
-		ValueObject vo = new BaseValueObject();
-        vo.addMetaData(data1);
-		vo.addMetaData(data2);
-
-		List<MetaData> data = new ArrayList<>();
-		data.add(data1);
-		data.add(data2);
-
-
-		XMLPlugin plugin = new XMLPlugin();
-		String string = plugin.stringFromObject(action);
-		System.out.println(string);
-
-        Action jsonAction = (Action)plugin.objectFromString(string);
-
-		String dummy = "dummy";
 	}
 
 	public static XMLPlugin getInstance(){
