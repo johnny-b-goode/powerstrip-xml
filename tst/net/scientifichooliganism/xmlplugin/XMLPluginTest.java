@@ -15,7 +15,7 @@ public class XMLPluginTest {
     private SimpleDateFormat sdf;
 	private XMLPlugin plugin;
 
-	private XMLPluginTest(){
+	public XMLPluginTest(){
 		sdf = null;
 		plugin = null;
 	}
