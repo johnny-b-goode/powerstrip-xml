@@ -41,7 +41,17 @@ public class XMLPluginTest {
 		action.setKlass("test class");
 		action.setDescription("test description");
 		action.setModule("Some module");
-		System.out.println(plugin.stringFromObject(action));
+		String expectedResult = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+				"<action>" +
+						"<description>test description</description>" +
+						"<class>test class</class>" +
+						"<method>New method</method>" +
+						"<module>Some module</module>" +
+						"<name>My Action Name</name>" +
+						"<URL>google.com</URL>" +
+				"</action>";
+
+		assertEquals(expectedResult, plugin.stringFromObject(action));
 	}
 
 	@Test
@@ -53,9 +63,20 @@ public class XMLPluginTest {
 			task.setName("test_task-01");
 			task.setDescription("a test task");
 			task.setStartDate(sdf.parse("2016-01-01"));
-			System.out.println(plugin.stringFromObject(task));
+			String expectedResult = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+					"<task>" +
+						"<id>1</id>" +
+						"<label>test_label</label>" +
+						"<concurrent>false</concurrent>" +
+						"<description>a test task</description>" +
+						"<exclusive>false</exclusive>" +
+						"<name>test_task-01</name>" +
+						"<startDate>2016-01-01T00:00:00-06:00</startDate>" +
+					"</task>";
+			assertEquals(expectedResult, plugin.stringFromObject(task));
 		} catch (Exception exc){
 			exc.printStackTrace();
+            fail("Unexpected exception (" + exc.getClass().getSimpleName() + ") thrown.");
 		}
 	}
 }
