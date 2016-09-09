@@ -2,6 +2,9 @@ package net.scientifichooliganism.xmlplugin;
 
 import net.scientifichooliganism.javaplug.annotations.Param;
 import net.scientifichooliganism.javaplug.interfaces.*;
+import net.scientifichooliganism.javaplug.util.JavaLogger;
+import net.scientifichooliganism.javaplug.util.LumberJack;
+import net.scientifichooliganism.javaplug.util.SpringBoard;
 import net.scientifichooliganism.xmlplugin.bindings.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -26,9 +29,10 @@ import java.util.Collection;
 
 public class XMLPlugin implements Plugin {
 	private static XMLPlugin instance;
+	private LumberJack logger;
 
 	private XMLPlugin(){
-
+		logger = JavaLogger.getInstanceForContext(this.getClass().getName());
 	}
 
 	public static XMLPlugin getInstance(){
@@ -54,7 +58,7 @@ public class XMLPlugin implements Plugin {
 			marshaller.marshal(vo, doc);
 		}
 		catch (Exception exc){
-			exc.printStackTrace();
+			logger.logException(exc, SpringBoard.ERROR);
 		}
 
 		return doc.getFirstChild();
@@ -75,7 +79,7 @@ public class XMLPlugin implements Plugin {
 				transformer.transform(new DOMSource(node), new StreamResult(writer));
 				ret = writer.toString();
 			} catch (Exception exc) {
-				exc.printStackTrace();
+				logger.logException(exc, SpringBoard.ERROR);
 			}
 		}
 
@@ -96,7 +100,7 @@ public class XMLPlugin implements Plugin {
 			ret = objectFromNode((Node) result.getDocumentElement());
 		}
 		catch (Exception exc){
-			exc.printStackTrace();
+            logger.logException(exc, SpringBoard.ERROR);
 		}
 
 		return ret;
@@ -167,7 +171,7 @@ public class XMLPlugin implements Plugin {
 			ret = obj.getDelegate();
 		}
 		catch (Exception exc) {
-			exc.printStackTrace();
+            logger.logException(exc, SpringBoard.ERROR);
 		}
 
 		return ret;
