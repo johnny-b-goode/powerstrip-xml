@@ -1,16 +1,15 @@
 package net.scientifichooliganism.xmlplugin;
 
-import net.scientifichooliganism.javaplug.interfaces.Action;
-import net.scientifichooliganism.javaplug.interfaces.Task;
-import net.scientifichooliganism.javaplug.vo.BaseAction;
-import net.scientifichooliganism.javaplug.vo.BaseTask;
+import net.scientifichooliganism.javaplug.vo.Action;
+import net.scientifichooliganism.javaplug.vo.Configuration;
+import net.scientifichooliganism.javaplug.vo.MetaData;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class XMLPluginTest {
     private SimpleDateFormat sdf;
@@ -35,51 +34,56 @@ public class XMLPluginTest {
 
 	@Test
 	public void test01(){
-		Action action = new BaseAction();
+		Action action = new Action();
 		action.setName("My Action Name");
 		action.setMethod("New method");
 		action.setURL("google.com");
 		action.setKlass("test class");
 		action.setDescription("test description");
 		action.setModule("Some module");
-		String expectedResult = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-				"<action>" +
+		String expectedResult = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+				"<net.scientifichooliganism.xmlplugin.bindings.XMLAction>" +
 						"<description>test description</description>" +
 						"<class>test class</class>" +
 						"<method>New method</method>" +
 						"<module>Some module</module>" +
 						"<name>My Action Name</name>" +
 						"<URL>google.com</URL>" +
-				"</action>";
+				"</net.scientifichooliganism.xmlplugin.bindings.XMLAction>";
 
 		assertEquals(expectedResult, plugin.stringFromObject(action));
 	}
 
-	// TODO: Make ambiguous of timezone
-	@Ignore
 	@Test
 	public void test02(){
-		try {
-			Task task = new BaseTask();
-			task.setID("1");
-			task.setLabel("test_label");
-			task.setName("test_task-01");
-			task.setDescription("a test task");
-			task.setStartDate(sdf.parse("2016-01-01"));
-			String expectedResult = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-					"<task>" +
-						"<id>1</id>" +
-						"<label>test_label</label>" +
-						"<concurrent>false</concurrent>" +
-						"<description>a test task</description>" +
-						"<exclusive>false</exclusive>" +
-						"<name>test_task-01</name>" +
-						"<startDate>2016-01-01T00:00:00-06:00</startDate>" +
-					"</task>";
-			assertEquals(expectedResult, plugin.stringFromObject(task));
-		} catch (Exception exc){
-			exc.printStackTrace();
-            fail("Unexpected exception (" + exc.getClass().getSimpleName() + ") thrown.");
-		}
+		Configuration configuration = new Configuration();
+		configuration.setID("2");
+		configuration.setSequence(2);
+		configuration.setValue("Test Value");
+		configuration.setKey("test Key");
+		MetaData md = new MetaData();
+		md.setKey("key");
+		md.setValue("value");
+		md.setSequence(20);
+		md.setID("20");
+		MetaData md2 = new MetaData();
+		md2.setKey("key2");
+		md2.setValue("Value2");
+		md2.setSequence(20);
+		md2.setID("20");
+		configuration.addMetaData(md);
+		configuration.addMetaData(md2);
+
+		String expectedResult = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+				"<net.scientifichooliganism.javaplug.vo.Configuration>" +
+				"<ID>2</ID>" +
+				"<key>test Key</key>" +
+				"<sequence>2</sequence>" +
+				"<value>Test Value</value>" +
+				"</net.scientifichooliganism.javaplug.vo.Configuration>";
+		String result = plugin.stringFromObject(configuration);
+
+		Configuration back = (Configuration)plugin.objectFromString(result);
+		assertEquals(expectedResult, result);
 	}
 }
