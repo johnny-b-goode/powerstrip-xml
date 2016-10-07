@@ -1,79 +1,70 @@
 package net.scientifichooliganism.xmlplugin.bindings;
 
-import net.scientifichooliganism.javaplug.interfaces.Action;
-import net.scientifichooliganism.javaplug.vo.BaseAction;
+import net.scientifichooliganism.javaplug.vo.Action;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="action")
-public class XMLAction extends XMLValueObject implements Action {
+public class XMLAction {
+    Action delegate;
+
 	public XMLAction () {
-		this(new BaseAction());
+		this(new Action());
 	}
 
 	public XMLAction(Action delegate){
-		super(delegate);
+		this.delegate = delegate;
 	}
 
-	@Override
+	public Action getDelegate(){
+		return delegate;
+	}
+
 	public String getName() {
-		return ((Action)delegate).getName();
+		return (delegate).getName();
 	}
 
-	@Override
 	public void setName(String in) {
-		((Action)delegate).setName(in);
+		(delegate).setName(in);
 	}
 
-	@Override
 	public String getDescription() {
-		return ((Action)delegate).getDescription();
+		return (delegate).getDescription();
 	}
 
-	@Override
 	public void setDescription(String in) {
-		((Action)delegate).setDescription(in);
+		(delegate).setDescription(in);
 	}
 
-	@Override
 	public String getModule() {
-		return ((Action)delegate).getModule();
+		return (delegate).getModule();
 	}
 
-	@Override
 	public void setModule(String in) {
-		((Action)delegate).setModule(in);
+		(delegate).setModule(in);
 	}
 
-	@Override
 	public String getKlass() {
-		return ((Action)delegate).getKlass();
+		return (delegate).getKlass();
 	}
 
-	@Override
 	@XmlElement(name="class")
 	public void setKlass(String in) {
-		((Action)delegate).setKlass(in);
+		(delegate).setKlass(in);
 	}
 
-	@Override
 	public String getURL() {
-		return ((Action)delegate).getURL();
+		return (delegate).getURL();
 	}
 
-	@Override
 	public void setURL(String in) {
-		((Action)delegate).setURL(in);
+		(delegate).setURL(in);
 	}
 
-	@Override
 	public String getMethod() {
-		return ((Action)delegate).getMethod();
+		return (delegate).getMethod();
 	}
 
-	@Override
 	public void setMethod(String in) {
-		((Action)delegate).setMethod(in);
+		(delegate).setMethod(in);
 	}
 }
